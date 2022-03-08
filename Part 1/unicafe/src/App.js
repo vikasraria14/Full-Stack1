@@ -12,29 +12,33 @@ const App = () => {
   const [average, updateAverage]=useState(0);
   const [positive,updatePositive]=useState(0);
 
-  const update=()=>
+  const update=(good,bad,neutral)=>
   {
-    console.log(good,bad,neutral);
+    const all=good+bad+neutral;
     updateAll(good+bad+neutral);
     updateAverage((good-1*bad)/all)
-    updatePositive(good/all)
+    updatePositive((good/all)*100)
   }
+  
 
   const increaseGood=()=>{
-    setGood(good+1);
-    console.log(good);
-   // updateAll(good+bad+neutral);
-    update();
+    let x=good;
+    x++;
+    setGood(x);
+    update(x,bad,neutral);
   }
+
   const increaseNeutral=()=>{
-    setNeutral(neutral+1);
-    console.log(neutral);
-    update();
+    let x=neutral;
+    x++;
+    setNeutral(x);
+    update(good,bad,x);
   }
   const increaseBad=()=>{
-    console.log(bad);
-    setBad(bad+1);
-    update();
+    let x=bad;
+    x++;
+    setBad(x);
+    update(good,x,neutral);
   }
 
   return (
@@ -42,11 +46,8 @@ const App = () => {
       <h1>give feedback</h1>
       <Button text={'good'} fun={increaseGood}/>
       <Button text={'neutral '} fun={increaseNeutral}/>
-      <Button text={'bad'} fun={increaseBad}/>
-      
+      <Button text={'bad'} fun={increaseBad}/>      
       <Statistic good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive}/>
-      
-
     </div>
   )
 }

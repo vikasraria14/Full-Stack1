@@ -13,7 +13,8 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [points, setPoints]=useState([0,0,0,0,0,0,0])
-  //const points = [0,0,0,0,0,0,0];
+  const [maxVotes, setMaxVotes]=useState(0);
+  
   const changeAnecdote=()=>
   {
     setSelected(Math.floor(Math.random()*7))
@@ -21,21 +22,24 @@ const App = () => {
   const changePoints=()=>
   {
     const newPoints=[...points];
-    newPoints[selected]+=1;
-    console.log(selected);
-    
-    setPoints(newPoints.map((point,i)=>{points[i]=point}));
-    console.log(points);
+    newPoints[selected]+=1;    
+    setPoints(newPoints);   
+    const newMax=newPoints.indexOf(Math.max(...newPoints));
+    setMaxVotes(newMax);
+   
   }
 
   return (
     <div>
+    <h1>Anecdote of the Day</h1>
       {anecdotes[selected]}
       <br/>
       <p>has {points[selected]} votes</p>
       
       <button onClick={changePoints}>vote</button>
       <button onClick={changeAnecdote}>next anecdote</button>
+      <h1>Anecdote with most Votes</h1>
+      {anecdotes[maxVotes]}
     </div>
   )
 }
