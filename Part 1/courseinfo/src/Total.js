@@ -1,14 +1,21 @@
- let tot=0;
+ 
+
+
 const Total=({parts})=>{
 
-      parts.map(
-          part=>{tot+=part.exercises
-            return tot}
-             
-         )
     
 
-    const total=tot;
+    const fun=(s,p)=>
+    {
+        console.log("hello ",s,p)
+        return s+p.exercises;
+    }
+   const total=parts.reduce(fun,0)
+
+     
+    
+
+   // const total=tot;
 
     return (<p>Number of exercises {total}</p>)
 }
