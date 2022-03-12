@@ -34,6 +34,7 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
     }
     else
     {
+        
       setPersons(persons.concat(newNameObj))
       setNamesToShow(persons.concat(newNameObj))
     }
