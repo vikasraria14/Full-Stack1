@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useState } from "react"
 const PersonForm=({persons,setPersons,setNamesToShow})=>
 {
@@ -27,16 +28,20 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
       id: persons.length+1
     }
     const x= persons.findIndex(person=>person.name===newNameObj.name)
-    console.log(x)
+   // console.log(x)
     if(x!==-1)
     {
       alert(`${newNameObj.name} is already added to the phonebook`)
     }
     else
     {
-        
+
+        axios.post('http://localhost:3001/names',newNameObj)
+        .then(response=>setNamesToShow(persons.concat(response.data)))
+       
+        setNamesToShow(persons.concat(newNameObj))
       setPersons(persons.concat(newNameObj))
-      setNamesToShow(persons.concat(newNameObj))
+      
     }
     setNewName('');
     setNewNumber('');
