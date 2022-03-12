@@ -63,7 +63,7 @@ function App() {
           />
         </div>
         :
-         countriesToShow.map(country=><p key={country.name.official}>{country.name.common}</p>))        
+         countriesToShow.map(country=><p key={country.name.official}>{country.name.common} </p>))        
           
           
         
