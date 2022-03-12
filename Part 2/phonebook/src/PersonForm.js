@@ -1,4 +1,4 @@
-import axios from "axios"
+import database from './backend'
 import { useState } from "react"
 const PersonForm=({persons,setPersons,setNamesToShow})=>
 {
@@ -35,13 +35,11 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
     }
     else
     {
-
-        axios.post('http://localhost:3001/names',newNameObj)
-        .then(response=>setNamesToShow(persons.concat(response.data)))
-       
-        setNamesToShow(persons.concat(newNameObj))
-      setPersons(persons.concat(newNameObj))
-      
+        database.create(newNameObj)
+        .then(response=>{
+            setNamesToShow(persons.concat(response))
+            console.log(response);
+        })      
     }
     setNewName('');
     setNewNumber('');

@@ -1,8 +1,8 @@
 import { useState , useEffect} from 'react'
-import axios from 'axios'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
 import Persons from './Persons'
+import database from './backend'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -14,12 +14,15 @@ const App = () => {
 
 
   useEffect(()=>{
-    axios.get('http://localhost:3001/names')
-    .then(response=>{
-      //console.log(response.data)
-      setPersons(response.data)
-      setNamesToShow(response.data)
-    })
+    
+     database.getAll()
+     .then(response=>{
+       console.log(response);
+       setPersons(response)
+       setNamesToShow(response)
+     })
+    
+    
   },[])
   
   
