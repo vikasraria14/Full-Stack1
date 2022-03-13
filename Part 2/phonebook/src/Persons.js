@@ -2,7 +2,7 @@ import database from './backend';
 
 
 
-const Persons=({person,setNamesToShow,setPersons})=>
+const Persons=({person,setNamesToShow,setPersons,setErrorMessage})=>
 {
 
     const confirmDelete=(person)=>
@@ -24,8 +24,16 @@ const Persons=({person,setNamesToShow,setPersons})=>
                .then(response=>{setNamesToShow(response)
                 setPersons(response)
             })
-           
+            
         })
+        .catch(error=>{console.log('failed')
+            
+            setErrorMessage(`${person.name} has already been deleted`)
+            setTimeout(() => {
+                setErrorMessage(null)
+              }, 5000) 
+            
+    })
 
        }
         

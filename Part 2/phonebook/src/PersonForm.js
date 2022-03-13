@@ -1,6 +1,6 @@
 import database from './backend'
 import { useState } from "react"
-const PersonForm=({persons,setPersons,setNamesToShow})=>
+const PersonForm=({persons,setPersons,setNamesToShow,setSuccessMessage})=>
 {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -42,6 +42,7 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
             database.getAll()
                .then(response=>{setNamesToShow(response)
                 setPersons(response)
+                setSuccessMessage(`${response} added`)
             })
 
             })
@@ -57,10 +58,14 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
             
            setPersons(persons.concat(response))
          setNamesToShow(persons.concat(response))
+         setSuccessMessage(`${newNameObj.name} added`)
         })      
     }
     setNewName('');
     setNewNumber('');
+    setTimeout(()=>{
+        setSuccessMessage(null)
+    },3000)
    // setSearchKeys('');
     
   }
