@@ -9,10 +9,13 @@ const getAll=()=>{
 }
 const create=(obj)=>{
     const promise=axios.post(url,obj)
-    console.log(promise)
+   // console.log(promise)
     return promise.then(response=>response.data)
 }
-const update=()=>{}
+const update=(id,obj)=>{
+    const promise=axios.put(url+'/'+id,obj)
+    return promise.then(response=>response.data)
+}
 const remove=(id)=>{
     const promise= axios.delete(url+'/'+id);
     return promise

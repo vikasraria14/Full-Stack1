@@ -27,12 +27,26 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
       number:newNumber,
      // id: persons.length+1
     }
-    console.log(persons)
+   // console.log(persons)
     const x= persons.findIndex(person=>person.name===newNameObj.name)
    // console.log(x)
     if(x!==-1)
     {
-      alert(`${newNameObj.name} is already added to the phonebook`)
+        
+        const y=persons.filter((person)=>person.name===newNameObj.name)
+        const z=window.confirm(`${y[0].name} is already added in the phonebook, replace the old number with new one`)
+        if(z)
+        {
+            database.update(y[0].id,newNameObj)
+            .then(response=>{//console.log('hello  ',response)
+            database.getAll()
+               .then(response=>{setNamesToShow(response)
+                setPersons(response)
+            })
+
+            })
+        }
+    //  alert(`${newNameObj.name} is already added to the phonebook`)
     }
     else
     {
@@ -40,7 +54,7 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
         database.create(newNameObj)
        .then(response=>{
 
-
+            
            setPersons(persons.concat(response))
          setNamesToShow(persons.concat(response))
         })      

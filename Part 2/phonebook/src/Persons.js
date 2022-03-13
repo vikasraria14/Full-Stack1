@@ -9,16 +9,16 @@ const Persons=({person,setNamesToShow,setPersons})=>
 {
 
    return ()=>{
-       console.log(person.name)
-       console.log(person)
+   //    console.log(person.name)
+     //  console.log(person)
        const x= window.confirm(`Delete ${person.name}`)
-       console.log(x);
+    //   console.log(x);
 
        if(x)
        {        
         database.remove(person.id)
         .then(()=>{
-           console.log('Deleted')
+      //     console.log('Deleted')
           
                database.getAll()
                .then(response=>{setNamesToShow(response)
