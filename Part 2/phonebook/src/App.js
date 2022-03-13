@@ -17,9 +17,9 @@ const App = () => {
     
      database.getAll()
      .then(response=>{
-       console.log(response);
-       setPersons(response)
+      
        setNamesToShow(response)
+       setPersons(response)
      })
     
     
@@ -46,7 +46,7 @@ const App = () => {
       <PersonForm persons={persons}  setPersons={setPersons} setNamesToShow={setNamesToShow} />
       <h2>Numbers</h2>
       
-      {namesToShow.map(person=><Persons key={person.id} person={person}/>)}
+      {namesToShow.map(person=><Persons key={person.id} person={person} setNamesToShow={setNamesToShow} setPersons={setPersons}/>)}
     </div>
   )
   

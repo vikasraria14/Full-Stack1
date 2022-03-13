@@ -25,8 +25,9 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
     const newNameObj={
       name:newName,
       number:newNumber,
-      id: persons.length+1
+     // id: persons.length+1
     }
+    console.log(persons)
     const x= persons.findIndex(person=>person.name===newNameObj.name)
    // console.log(x)
     if(x!==-1)
@@ -35,10 +36,13 @@ const PersonForm=({persons,setPersons,setNamesToShow})=>
     }
     else
     {
+        
         database.create(newNameObj)
-        .then(response=>{
-            setNamesToShow(persons.concat(response))
-            console.log(response);
+       .then(response=>{
+
+
+           setPersons(persons.concat(response))
+         setNamesToShow(persons.concat(response))
         })      
     }
     setNewName('');
