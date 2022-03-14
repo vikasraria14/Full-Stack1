@@ -2,7 +2,7 @@ import database from './backend';
 
 
 
-const Persons=({person,setNamesToShow,setPersons,setErrorMessage})=>
+const Persons=({person,setNamesToShow,setPersons,setMessage})=>
 {
 
     const confirmDelete=(person)=>
