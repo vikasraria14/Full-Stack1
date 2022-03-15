@@ -2,6 +2,7 @@ const express=require('express')
 const date=require('date-and-time')
 const app= express()
 const now = date
+app.use(express.json())
 persons=[
     { 
       "id": 1,
@@ -51,11 +52,41 @@ app.get('/api/persons/:id',(req,res)=>{
 
     
 })
-
+app.get('/api/persons',(req,res)=>{
+    res.status(200).json(persons)
+})
 app.delete('/api/persons/:id', (req,res)=>{
     id=Number(req.params.id)
     persons=persons.filter(person=>person.id!==id);
     res.status(204).json(persons)
+})
+
+
+app.post('/api/notes', (request, response) => {
+    const note = request.body
+    console.log(note)
+    response.json(note)
+  })
+
+app.post('/api/persons',(req,res)=>{
+    const body=req.body;
+
+   // if(!(body.name||body.number))
+    {
+     //  return res.status(200).end('<h1>Invalid Data</h1>')
+    }
+    console.log('hello ji')
+    const obj={
+        "id":Math.floor(Math.random()*100000),
+        "name":body.name,
+        "number":body.number
+    }
+
+    persons=persons.concat(obj);
+    console.log(req.body)
+    console.log('hike ',obj)
+    res.status(200).json(persons);
+
 })
 
 
