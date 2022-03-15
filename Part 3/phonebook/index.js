@@ -39,7 +39,17 @@ app.get('/info', (req,res)=>{
 app.get('/api/persons/:id',(req,res)=>{
     const id=Number(req.params.id)
     const x=persons.find(person=>person.id===id)
-    res.status(200).json(x);
+
+    if(x)
+    {
+        res.status(200).json(x);
+    }
+    else
+    {
+        res.status(404).end('<h1>Not Found</h1>')
+    }
+
+    
 })
 
 
