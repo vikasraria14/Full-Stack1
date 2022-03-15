@@ -70,10 +70,18 @@ app.post('/api/notes', (request, response) => {
 
 app.post('/api/persons',(req,res)=>{
     const body=req.body;
+    const n=persons.find(person=>body.name===person.name)
 
-   // if(!(body.name||body.number))
+    if(n!==-1)
     {
-     //  return res.status(200).end('<h1>Invalid Data</h1>')
+        
+        return res.status(400).json({ 
+            error: 'Name Already Exists'})
+    }
+    if(!(body.name&&body.number))
+    {
+        return res.status(400).json({ 
+            error: 'content missing'})
     }
     console.log('hello ji')
     const obj={
