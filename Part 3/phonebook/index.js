@@ -1,6 +1,9 @@
 const express=require('express')
 const date=require('date-and-time')
 const app= express()
+const morgan=require('morgan')
+
+morgan('tiny')
 const now = date
 app.use(express.json())
 persons=[
@@ -72,7 +75,7 @@ app.post('/api/persons',(req,res)=>{
     const body=req.body;
     const n=persons.find(person=>body.name===person.name)
 
-    if(n!==-1)
+    if(n)
     {
         
         return res.status(400).json({ 
