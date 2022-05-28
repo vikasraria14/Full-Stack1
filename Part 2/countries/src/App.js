@@ -1,88 +1,70 @@
+import { useState , useEffect} from "react";
 import axios from 'axios';
-import {useState, useEffect} from 'react';
+import './App.css';
+import Weather from "./Weather";
+import ShowCountry from "./ShowCountry";
+const App=()=>
+{
 
-function App() {
-  const url='https://restcountries.com/v3.1/all';
-  const [countries,setCountries]=useState([])
-  const [countriesToShow,setCountriesToShow]=useState([]);
-  const [searchField,setSearchField]=useState('');
-  const [detail,setDetail]=useState([]);
-  useEffect(
-    ()=>{
-      axios.get(url)
-      .then(response=>{
-        setCountries(response.data)
-        console.log(response.data)
-        setCountriesToShow(response.data)
-        
-      });
-    }
-    ,[])
-    const showLang=(languages)=>
-    {
-      for(let key in languages)
-      {
-        console.log(languages[key])
-        
-      }
-    }
-    const handleNameChange=event=>{
-      const x=event.target.value;
-      setSearchField(x)
-      
-      const updatedCountries= countries.filter(country=>country.name.official.toLowerCase().includes(x.toLowerCase()))
-      setCountriesToShow(updatedCountries)
-      
+  const [countries,setCountries]=useState('');
+  const [countriesToShow,setCountriesToShow]=useState('');
+  const [countriesToShow1,setCountriesToShow1]=useState('');
+  const [search,setSearch]=useState('')
+  const [btn,setBtn]=useState(false)
+  let langs;
+  useEffect(()=>
+  {
     
-    }
-
-    const showDetails=(event)=>
+    axios.get('https://restcountries.com/v3.1/all')
+    .then(response=>{
+    
+    setCountries(response.data);
+    console.log(response.data);
+    })
+  },[])
+  
+    const handleChange=event=>
     {
-      console.log(event.target.value);
-      const obj= countriesToShow.filter(country=>country.name.official===event.target.value)
-      
-      
+      setSearch(event.target.value);
+      const x=event.target.value.toLowerCase();
+      setCountriesToShow(countries.filter(country=>country.name.official.toLowerCase().includes(x)))
     }
-    let langs;
-  return (
-    <div style={{margin:"50px"}}>
+    const handleShow=(event)=>
+    {
+      
+      setBtn(!btn);
+      const x=event.target.id;
+      setCountriesToShow1(countries.filter(country=>country.name.official===x))
+     
+    }
+  
+ if( btn)
+ {
+  return(
 
-      <form>
-        Find Countries: <input value={searchField} onChange={handleNameChange}/>
-      </form>
-      {
-        countriesToShow.length>10?
-        'Too many matches, try another filter':        
-        (countriesToShow.length===1?
-        
-        <div>
-          <h1>{countriesToShow[0].name.common}</h1>
-          <p>Capital: {countriesToShow[0].capital}</p>
-          <p>Area: {countriesToShow[0].area}</p>
-          <h2>Languages</h2>
-          <ul>
-            
-            
-            {langs=Object.keys(countriesToShow[0].languages)}
-           
-            {langs.map((lang)=><li key={lang}>{countriesToShow[0].languages[lang]}</li>)}
-            
-          </ul>
-          <img src=
-          {countriesToShow[0].flags.png} alt='Flag'
-          style={{border:"1px solid black", margin:"0px"}}
-          />
-        </div>
-        :
-         countriesToShow.map(country=><p key={country.name.official}>{country.name.official}  <button value={country.name.official} onClick={showDetails}>Show</button></p>)) 
-          
-          
-        
-        
-      }
+    <div>
+      <ShowCountry country={countriesToShow1[0]} handleShow={handleShow} langs={langs} /> 
+      
 
     </div>
-  );
+   )
+  }
+  else
+  {
+  return(
+    <div>
+      <input value={search} onChange={handleChange}/ >
+    {  (countriesToShow.length>0&&countriesToShow.length<10)?
+    countriesToShow.length===1?
+    <ShowCountry country={countriesToShow[0]}></ShowCountry>
+    
+    :countriesToShow.map((country)=><p key={country.name.official}><button id={country.name.official} onClick={handleShow}>Show</button>  {country.name.official}  </p>)
+    :<p></p>}
+      
+     
+    </div>
+  )
+  }
 }
 
 export default App;
