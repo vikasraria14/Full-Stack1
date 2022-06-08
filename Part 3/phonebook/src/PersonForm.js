@@ -1,6 +1,6 @@
-import database from './backend'
+import database from './Backend'
 import { useState } from "react"
-const PersonForm=({persons,setPersons,setNamesToShow,setSuccessMessage})=>
+const PersonForm=({persons,setPersons,setNamesToShow})=>
 {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -24,48 +24,42 @@ const PersonForm=({persons,setPersons,setNamesToShow,setSuccessMessage})=>
     //console.log("Hello")
     const newNameObj={
       name:newName,
-      number:newNumber,
-     // id: persons.length+1
+      number:newNumber
     }
-   // console.log(persons)
     const x= persons.findIndex(person=>person.name===newNameObj.name)
    // console.log(x)
     if(x!==-1)
     {
-        
-        const y=persons.filter((person)=>person.name===newNameObj.name)
-        const z=window.confirm(`${y[0].name} is already added in the phonebook, replace the old number with new one`)
-        if(z)
-        {
-            database.update(y[0].id,newNameObj)
-            .then(response=>{//console.log('hello  ',response)
-            database.getAll()
-               .then(response=>{setNamesToShow(response)
-                setPersons(response)
-                setSuccessMessage(`${response} added`)
-            })
-
-            })
-        }
-    //  alert(`${newNameObj.name} is already added to the phonebook`)
+      console.log(x)
+      
+     
+      const z=window.confirm(`Do you want to edit ${newNameObj.name}`)
+      if(z)
+      {
+        const per=persons.find(person=>{return person.name===newNameObj.name});
+        database.update(per.id,newNameObj)
+        .then(
+          database.getAll()
+          .then(response=>{
+      // console.log(response);
+          setPersons(response)
+          setNamesToShow(response)
+          })
+        )
+      }
     }
     else
     {
-        
         database.create(newNameObj)
-       .then(response=>{
-
-            
-           setPersons(persons.concat(response))
-         setNamesToShow(persons.concat(response))
-         setSuccessMessage(`${newNameObj.name} added`)
-        })      
+        .then(response=>{
+            setNamesToShow(persons.concat(response))
+            setPersons(persons.concat(response))
+            console.log(response);
+        })
+        .catch(err=>alert(err))
     }
     setNewName('');
     setNewNumber('');
-    setTimeout(()=>{
-        setSuccessMessage(null)
-    },3000)
    // setSearchKeys('');
     
   }

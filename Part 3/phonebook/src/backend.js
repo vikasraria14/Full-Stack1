@@ -1,24 +1,25 @@
 import axios from "axios"
 
-const url='http://localhost:3001/names';
 
+const baseUrl = '/api/persons'
 
 const getAll=()=>{
-    const promise=axios.get(url)
+    const promise=axios.get(baseUrl)
     return promise.then(response=>response.data);
 }
 const create=(obj)=>{
-    const promise=axios.post(url,obj)
-   // console.log(promise)
+    const promise=axios.post(baseUrl,obj)
     return promise.then(response=>response.data)
 }
-const update=(id,obj)=>{
-    const promise=axios.put(url+'/'+id,obj)
+const update=(id,newNameObj)=>{
+    const url=baseUrl+'/'+id;
+    const promise=axios.put(url,newNameObj);
     return promise.then(response=>response.data)
 }
 const remove=(id)=>{
-    const promise= axios.delete(url+'/'+id);
-    return promise
+    const url=baseUrl+'/'+id;
+    const promise=axios.delete(url)
+    return promise.then(response=>response.data)
 }
-
-export default {getAll,create,update,remove};
+const x={getAll,create,update,remove}
+export default x;
