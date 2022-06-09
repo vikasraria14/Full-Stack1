@@ -14,7 +14,8 @@ blogRouter.get('/', async (request, response) => {
 
   
   blogRouter.post('/', async (request, response) => {
-    
+    //console.log(request)
+    //console.log(request.token)
     const decodedToken=jwt.verify(request.token,process.env.SECRET)
     
     const user=await User.findById(decodedToken.id)
@@ -26,7 +27,7 @@ blogRouter.get('/', async (request, response) => {
       "likes":request.body.likes,
       "user":user._id
     })  
-    console.log(typeof(blog.likes))
+    console.log(blog)
     const savedBlog=await blog.save()  
     user.blogs=user.blogs.concat(savedBlog._id)    
     await user.save()
