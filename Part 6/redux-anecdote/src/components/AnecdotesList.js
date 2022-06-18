@@ -8,11 +8,11 @@ const AnecdotesList=()=>{
         return state.dotesToShow
     })
     console.log(anecdotes)
-    const comp=(x,y)=>{
+ /*   const comp=(x,y)=>{
         console.log("x",x)
         return y.votes-x.votes
     }
-    anecdotes.sort(comp);
+   // anecdotes.sort(comp);*/
     const dispatch = useDispatch()
     
 
