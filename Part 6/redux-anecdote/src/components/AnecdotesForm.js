@@ -1,12 +1,24 @@
 import { useDispatch } from "react-redux";
-import { addAnecdote } from "../reducers/anecdoteReducer";
+import { addAnecdote,asObject } from "../reducers/anecdoteReducer";
+import {refresh} from "../reducers/showNotesReducer"
+import doteService from '../services/anecdotes'
+
+
 const AnecdotesForm=()=>{
     const dispatch=useDispatch()
-    const handleCreation=(event)=>{
+    const handleCreation=async(event)=>{
         event.preventDefault();
         
         const anecdote=event.target.field.value;
-        return dispatch(addAnecdote(anecdote));
+        const x=asObject(anecdote)
+        const y=await doteService.setAll(x)
+        console.log(y)
+      //  const z={...y,votes:0}
+        
+       // console.log("z- ",z)
+        
+        dispatch(addAnecdote(x));
+        dispatch(refresh(x))
         
     }
 
