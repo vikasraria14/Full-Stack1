@@ -1,30 +1,38 @@
 import { useDispatch,useSelector } from "react-redux";
-import { addVote } from "../reducers/anecdoteReducer";
-import {addVote1,show} from '../reducers/showNotesReducer';
-import { addNotification } from "../reducers/notificationReducer"
+import { incVote } from "../reducers/anecdoteReducer";
+import {show,initializeDotes} from '../reducers/showNotesReducer';
+import { setNotification} from "../reducers/notificationReducer"
 const AnecdotesList=()=>{
     const anecdotes = useSelector(state =>{
         
         return state.dotesToShow
     })
     console.log(anecdotes)
- /*   const comp=(x,y)=>{
+
+    /*
+    const comp=(x,y)=>{
         console.log("x",x)
         return y.votes-x.votes
     }
-   // anecdotes.sort(comp);*/
+    anecdotes.sort(comp);
+
+    */
     const dispatch = useDispatch()
     
 
-    const vote = (id) => {
+    const vote = async (id) => {
         const n=anecdotes.find(anecdote=>{return anecdote.id===id })
-       const notification=n.content
+       
       //  console.log("Hello Voter",notification)
+     
+      const am={...n,votes:n.votes+1}
         
-        dispatch(addNotification(notification))
         
-        dispatch(addVote(id));
-        dispatch(addVote1(id))
+       dispatch(setNotification(`You voted for ${n.content}!!`,2000)) 
+       await dispatch(incVote(id,am))
+       dispatch(initializeDotes())
+       // dispatch(addVote1(id))
+       // dispatch(addVote(id));
         dispatch(show)
       //  console.log('vote', id)
         

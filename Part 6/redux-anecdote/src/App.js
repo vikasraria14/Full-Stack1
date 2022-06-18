@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
-import anecdoteService from './services/anecdotes'
 import AnecdotesForm from './components/AnecdotesForm'
 import AnecdotesList from './components/AnecdotesList'
 import Notification from './components/Notification'
 import Filter from './components/Filter'
 import {useDispatch } from 'react-redux'
-import { setState } from './reducers/anecdoteReducer'
-import {setState1} from './reducers/showNotesReducer'
+import { initializeDotes } from './reducers/showNotesReducer'
+import { initializeDotes1 } from './reducers/anecdoteReducer'
 
 
 const App = () => {
@@ -14,16 +13,12 @@ const App = () => {
 const dispatch=useDispatch();
   
 useEffect(()=>{
-  anecdoteService.getAll()
-  .then(response=>{
-    const x=[...response]
-    dispatch(setState(x))
-    
-    dispatch(setState1(x))
+  dispatch(initializeDotes())
+  dispatch(initializeDotes1())
     
    // console.log("dispatchedagain")
     
-  })
+ 
   
 
 },[dispatch])

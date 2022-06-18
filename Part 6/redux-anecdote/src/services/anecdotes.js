@@ -11,5 +11,11 @@ const setAll=async(dat)=>{
     const response=await axios.post(baseUrl,dat)
     return response.data
 }
-const x={getAll,setAll}
+
+const updateAll=async(id,dat)=>{
+    const url=baseUrl+'/'+id;
+    const response=await axios.put(url,dat)
+    return response.data
+}
+const x={getAll,setAll,updateAll}
 export default x;

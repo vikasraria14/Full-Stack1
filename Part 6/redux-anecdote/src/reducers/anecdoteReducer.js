@@ -1,3 +1,5 @@
+import doteService from '../services/anecdotes'
+
 const anecdotesAtStart = [
   
   ]
@@ -20,9 +22,8 @@ export const addVote=(id)=>{
   
  return ({
     type:'VOTE',
-    data:{
-      id
-    }      
+    data:id
+    
   })   
 
 }
@@ -31,7 +32,7 @@ export const addAnecdote=(anecdote)=>{
     return (
      {
         type:'ADD',
-        anecdote      
+        data:anecdote      
     }
     )
 
@@ -61,8 +62,9 @@ const reducer = (state=initialState, action) => {
 
     case 'VOTE':
       
-      const id=action.data.id;      
-      const an=state.find(anecdote=>{return anecdote.id===id})      
+      const id=action.data;      
+      const an=state.find(anecdote=>{return anecdote.id===id}) 
+      console.log(an)     
       const am={...an,votes:an.votes+1}      
       const y=state.map(anecdote=>{
       //  console.log(anecdote)
@@ -81,5 +83,41 @@ const reducer = (state=initialState, action) => {
 
   
 }
+
+export const initializeDotes1 =()=>{
+  return async dispatch=>{
+    const dotes= await doteService.getAll()
+    dispatch({ 
+      type:"SET_STATE",
+      data:dotes
+    })
+  }
+}
+
+export const createNew1= dat =>{
+  return async dispatch =>{
+    const dote=await doteService.setAll(dat)
+    console.log(dote)
+    dispatch({
+      type:"ADD",
+      data:dote
+    })
+  //  dispatch(initializeDotes())
+  }
+}
+
+export const incVote=(id,dat)=>{
+  
+  return async dispatch =>{
+    
+      doteService.updateAll(id,dat)
+
+      
+  }
+}
+
+
+            
+    
 
 export default reducer

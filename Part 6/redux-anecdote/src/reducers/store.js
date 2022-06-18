@@ -6,9 +6,10 @@ import filterReducer from './showNotesReducer'
 //console.log("store the" ,filterReducer)
 const store = configureStore({
     reducer:{
+        dotesToShow:filterReducer,
         anecdote1:anecdoteReducer,
-    notification:notificationReducer,
-    dotesToShow:filterReducer
+    notification:notificationReducer
+    
     }
 })
 //console.log(store.getState())
