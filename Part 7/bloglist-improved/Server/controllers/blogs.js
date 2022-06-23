@@ -3,13 +3,14 @@ const Blog= require('../models/blog')
 const User=require('../models/user')
 const jwt=require('jsonWebToken')
 
-blogRouter.put('/blog/:id',async(request, response)=>{
+blogRouter.put('/blogs/:id',async(request, response)=>{
   
   const newBlog={
     title: request.body.title,
     author: request.body.author,
     url: request.body.url,
-    likes: request.body.likes
+    likes: request.body.likes,
+    comments:request.body.comments
   }
   console.log(newBlog)
   const res=await Blog.findByIdAndUpdate(request.params.id,newBlog,{new:true})
@@ -70,7 +71,8 @@ blogRouter.get('/', async (request, response) => {
         title: request.body.title,
         author: request.body.author,
         url: request.body.url,
-        likes: request.body.likes
+        likes: request.body.likes,
+        comments:request.body.comments
       }
       console.log(newBlog)
       const res=await Blog.findByIdAndUpdate(request.params.id,newBlog,{new:true})

@@ -3,7 +3,7 @@ import { initializeBlogs,deleteBlog } from "../reducers/blogReducer"
 import blogService from "../services/blogs"
 import { useDispatch } from "react-redux"
 
-import '../App.css'
+//import '../App.css'
 const Blog = ({blog,compareFun,user}) => {
   const [loginVisible, setLoginVisible] = useState(false)
   const hideWhenVisible={'display':loginVisible?'none':''}
@@ -36,24 +36,15 @@ const dispatch=useDispatch()
   }
 
   return(
-    <div className="blogStyle">
+    <div >
        
-        <div style={hideWhenVisible}>
+        <div >
           {blog.title} by {blog.author}  
-          <button  onClick={()=>{setLoginVisible(true)}}>View</button>
-        </div>  
-        <div style={showWhenVisible}>
-          <h3>
-            {blog.title} by {blog.author} 
-            <button  onClick={()=>{setLoginVisible(false)}}>Hide</button>
-          
-          </h3>
-          <p>{blog.url}</p>
-          <p>Likes {blog.likes} <button onClick={handleLike}>Like</button></p>
-          <button onClick={handleDelete}> Remove </button>
-          
          
-        </div>
+        </div>  
+       
+          
+      
     </div>
   )
   

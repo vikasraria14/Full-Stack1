@@ -12,6 +12,7 @@ import AllBlogs from './components/AllBlogs'
 import { getAllUsers } from './reducers/allUsersReducer'
 import SingleBlog from './components/SingleBlog'
 import Navigation from './components/Navigation'
+import FormPage from './components/FormPage'
 
 
  
@@ -65,15 +66,16 @@ const App = () => {
   if(user===null)
   {
     return(
-      <>
-      <LoginForm /*setUser={setUser} */ />
+      <div className='container'>
+      
+      <LoginForm/>
       <Router>
         <Routes>
-          
+          <Route path='/login' element={<LoginForm/>}/>
           <Route path='/' element={<AllBlogs blogs={blogs}/>}/>
         </Routes>
       </Router>
-      </>
+      </div>
     
      
     )
@@ -81,7 +83,7 @@ const App = () => {
   else
   {
     return (
-      <div>
+      <div className='container'>
         
           
         <Router>

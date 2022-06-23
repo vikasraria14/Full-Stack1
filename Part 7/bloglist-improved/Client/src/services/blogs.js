@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'api/blogs'
+const baseUrl = '/api/blogs'
 let token=null
 const setToken= newToken =>
 {
@@ -21,7 +21,7 @@ const setAll = async (blog) =>{
 }
 const updateComment=async(id,blog)=>{
   const url=baseUrl+"/"+id;
-  console.log(url)
+  console.log(url,blog)
   const response=await axios.put(url,blog)
   return response;
 }

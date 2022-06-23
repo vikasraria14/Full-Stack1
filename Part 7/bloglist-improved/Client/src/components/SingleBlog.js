@@ -2,6 +2,7 @@ import {useParams} from 'react-router-dom'
 import blogService from "../services/blogs"
 import { useDispatch,useSelector } from "react-redux"
 import { initializeBlogs,deleteBlog } from "../reducers/blogReducer"
+import FormPage from './FormPage'
 
 const SingleBlog=()=>{
     const blogs=useSelector(state=>state.blogs)
@@ -35,13 +36,13 @@ const SingleBlog=()=>{
 
     console.log(comment)
     comment.push(event.target[0].value);
-    let newBlog={...blog,comment};
-    console.log(newBlog,blog)
+    let newBlog={...blog,comments:comment};
+    console.log("Lalala",newBlog,blog)
   //  newBlog.likes=newBlog.likes+1;
     await blogService.updateComment(blog.id,newBlog)
     const blogs=await blogService.getAll()
     const x=blogs.sort(compareFun)
-    dispatch(initializeBlogs(x));
+    dispatch(initializeBlogs());
   }
      
       
@@ -61,7 +62,7 @@ if(blog)
 {
     return(
         <div >
-        
+        <FormPage/>
         <h3>
           {blog.title} by {blog.author} 
           

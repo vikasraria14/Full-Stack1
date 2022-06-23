@@ -5,8 +5,11 @@ import { setNotification } from "../reducers/notificationReducer"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import LoginInfo from './LoginInfo'
+import { initializeBlogs } from "../reducers/blogReducer"
+import { useNavigate } from "react-router-dom"
 const BlogForm=({setBlogs})=>
 {
+  const navigate=useNavigate();
     const dispatch=useDispatch()
     const [title,setTitle]=useState('')
     const [author,setAuthor]=useState('')
@@ -23,6 +26,7 @@ const BlogForm=({setBlogs})=>
     })
     const handleBlogCreation= async (event) =>
     {
+       
         event.preventDefault()
         const blog={
         title,author,url,likes:0
@@ -36,9 +40,9 @@ const BlogForm=({setBlogs})=>
         await blogService.setAll(blog)
       //  setBlogCreation('New Blog Created')
         dispatch(setNotification("new blog created",2))
-        blogService.getAll().then(blogs =>
-            setBlogs( blogs )
-          ) 
+        await blogService.getAll()
+        dispatch(initializeBlogs())
+        navigate('/')
         setTimeout(()=>{
       //  setBlogCreation(null)
         },2000)

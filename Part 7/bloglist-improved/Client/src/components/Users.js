@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
 import { getAllUsers } from "../reducers/allUsersReducer";
 import {Link } from 'react-router-dom'
+import { Table } from "react-bootstrap";
 
 
 
@@ -22,7 +23,7 @@ const Users=()=>{
             
             <h3>Users</h3>            
             {allUsers===null?"No Data":
-            (<table>
+            (<Table striped>
                 <thead>
                     <tr>
                         <th>User</th>
@@ -37,7 +38,7 @@ const Users=()=>{
                     
                         
                 </tbody>
-            </table>)
+            </Table>)
                         
             }
             
