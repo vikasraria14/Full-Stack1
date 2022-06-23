@@ -11,7 +11,8 @@ const userSlice=createSlice({
         removeUser(state,action)
         {
             return state=null
-        }
+        },
+        
     }
 })
 
@@ -28,5 +29,6 @@ export const logout=()=>{
     }
 }
 
-export const {setUser,removeUser}=userSlice.actions
+
+export const {setUser,removeUser,createUser}=userSlice.actions
 export default userSlice.reducer

@@ -13,6 +13,7 @@ import { getAllUsers } from './reducers/allUsersReducer'
 import SingleBlog from './components/SingleBlog'
 import Navigation from './components/Navigation'
 import FormPage from './components/FormPage'
+import SignUp from './components/SignUp'
 
 
  
@@ -68,11 +69,14 @@ const App = () => {
     return(
       <div className='container'>
       
-      <LoginForm/>
+      
       <Router>
+      <Navigation/>
         <Routes>
           <Route path='/login' element={<LoginForm/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
           <Route path='/' element={<AllBlogs blogs={blogs}/>}/>
+
         </Routes>
       </Router>
       </div>
@@ -95,7 +99,7 @@ const App = () => {
           
         
           <Routes>
-        
+            
             <Route path="/users/:id" element={<User/>}/>
             <Route path='/users' element={<Users/>}></Route>
             <Route path='/blogs/create' element={<BlogForm/>}/>

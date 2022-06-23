@@ -6,6 +6,29 @@ import { useSelector } from "react-redux";
 const Navigation=()=>{
     const user=useSelector(state=>state.user)
     //const navigate=useNavigate()
+    if(!user)
+    {
+        return(
+            <Navbar bg="primary" variant="dark">
+                    <Container>
+                    <Navbar.Brand href="#home">Blogs</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="#" as="span" >
+                            <Link to='/' style={{color:"white"}}>blogs</Link> 
+                        </Nav.Link>
+                        <Nav.Link href="#" as="span">
+                            <Link to='/login' style={{color:"white"}} >Sign In</Link> 
+                        </Nav.Link>
+                        <Nav.Link href="#" as="span">
+                            <Link to='/signup' style={{color:"white"}}>Sign Up</Link>
+                        </Nav.Link>
+                        
+                    </Nav>
+                    </Container>
+                </Navbar>
+        )
+    }
+    else{
     return(
         
         <>
@@ -38,6 +61,7 @@ const Navigation=()=>{
 
        
     )
+    }
 }
 export default Navigation;
 

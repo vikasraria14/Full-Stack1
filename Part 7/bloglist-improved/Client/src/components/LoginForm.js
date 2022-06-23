@@ -5,6 +5,7 @@ import setAll from '../services/login'
 import blogService from "../services/blogs";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/userReducer";
+import { Link } from 'react-router-dom';
 const LoginForm=()=>{
 
   const [username, setUsername]=useState('')
@@ -74,13 +75,13 @@ const LoginForm=()=>{
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" type='password' value={password} onChange={handlePassword}/>
+          <Form.Control type="password" placeholder="Password"  value={password} onChange={handlePassword}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
         <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Submit
+          <Link style={{color:"white"}}to='/'>Submit</Link>
         </Button>
       </Form>
     </div>
