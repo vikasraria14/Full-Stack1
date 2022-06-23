@@ -28,7 +28,7 @@ const AnecdotesList=()=>{
       const am={...n,votes:n.votes+1}
         
         
-       dispatch(setNotification(`You voted for ${n.content}!!`,2000)) 
+       dispatch(setNotification(`You voted for ${n.content}!!`,5000)) 
        await dispatch(incVote(id,am))
        dispatch(initializeDotes())
        // dispatch(addVote1(id))

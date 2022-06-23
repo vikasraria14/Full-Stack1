@@ -17,12 +17,25 @@ const notificationSlice=createSlice({
     }
 
 })
+
+let x=null;
 export const setNotification=(dat,tim)=>{
+    
+    
     return async dispatch=>{
+        if(x)
+        {
+           
+            window.clearTimeout(x)
+        }
+       
         dispatch(addNotification(dat))
-        setTimeout(()=>{
+        
+        x=setTimeout(()=>{
             dispatch(clearNotification())
         },tim)
+       
+        
     }
 }
 export const {addNotification,clearNotification}=notificationSlice.actions;

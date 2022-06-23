@@ -1,14 +1,22 @@
 import { useState } from 'react'
+import {useField} from './hooks/hooks'
+import {BrowserRouter as Router, Routes, Route,Link, useParams, useNavigate} from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
     paddingRight: 5
   }
-  return (
-    <div>
-      <a href='#' style={padding}>anecdotes</a>
+/*
+  <a href='#' style={padding}>anecdotes</a>
       <a href='#' style={padding}>create new</a>
       <a href='#' style={padding}>about</a>
+      */
+  return (
+    <div>
+      <Link to='/' style={padding}>anecdotes</Link>
+      <Link to='/create' style={padding}>create new</Link>
+      <Link to='/about' style={padding}>about</Link>
+      
     </div>
   )
 }
@@ -17,7 +25,11 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => 
+        <li key={anecdote.id} >
+          <Link to={`anecdote/${anecdote.id}`}> {anecdote.content}</Link>
+        </li>
+      )}
     </ul>
   </div>
 )
@@ -44,40 +56,71 @@ const Footer = () => (
   </div>
 )
 
+
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
-
-
+  const navigate=useNavigate()
+  //const [content, setContent] = useState('')
+  //const [author, setAuthor] = useState('')
+  //const [info, setInfo] = useState('')
+  
+  const content=useField('content');
+  const author=useField('author');
+  const info=useField('info');
+  const reset=useField('reset')
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content:content.value,
+      author:author.value,
+      info:info.value,
       votes: 0
     })
+    props.setNotification(`You added ${content}`)
+    setTimeout(()=>props.setNotification(null),3000)
+    navigate('/')
   }
 
   return (
     <div>
       <h2>create a new anecdote</h2>
+      
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input name={content.name} value={content.value} onChange={content.onChange} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...info} />
         </div>
         <button>create</button>
+        <button>reset</button>
       </form>
+    </div>
+  )
+
+}
+
+const Anecdote=({anecdotes})=>{
+  const id=useParams().id
+  console.log(id)
+  const anec=anecdotes.find(anecdote=>{
+    console.log(anecdote.id===id)
+    return anecdote.id===Number(id)
+  })
+  console.log(anec)
+ // const anec="Hello There"
+  return(
+    <div>
+      <h1>{anec.content}</h1>
+      <h3>Authur : {anec.author}</h3>
+      <h3>URL : <a href={anec.info}>{anec.info}</a></h3>
+      <h3>Votes : {anec.votes}</h3>
     </div>
   )
 
@@ -123,15 +166,27 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h1>Software anecdotes</h1>
-      <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
-      <Footer />
-    </div>
+
+    <Router>
+        <h1>Software anecdotes</h1>
+        <Menu />
+        {notification}
+        <Routes>
+          <Route path='/anecdote/:id' element={<Anecdote anecdotes={anecdotes}/>} />
+          <Route path="/create" element={<CreateNew addNew={addNew} setNotification={setNotification}/>} />
+          <Route path="/about" element={<About/>}/>
+          <Route path="/" element={<AnecdoteList anecdotes={anecdotes}/>}/>
+        </Routes>
+            <Footer />
+        
+    </Router>
+    
+
+    
   )
+ // <AnecdoteList anecdotes={anecdotes} />
+   //   <About />
+     // <CreateNew addNew={addNew} />
 }
 
 export default App
